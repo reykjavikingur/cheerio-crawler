@@ -1,8 +1,9 @@
 const request = require('request');
 const Promise = require('promise');
 const cheerio = require('cheerio');
-const URL = require('url');
 const Queue = require('./lib/queue');
+const links = require('./lib/links');
+const origin = require('./lib/origin');
 
 var args = process.argv.slice(2);
 var url = args[0];
@@ -10,6 +11,7 @@ if (!url) {
     console.error('no url given');
     process.exit(1);
 }
+var allowedOrigin = origin(url);
 
 var queue = new Queue();
 queue.add(url);
@@ -22,7 +24,9 @@ function iterate() {
             .then(urls => {
                 debugger;
                 for (let url of urls) {
-                    queue.add(url);
+                    if (origin(url) === allowedOrigin) {
+                        queue.add(url);
+                    }
                 }
                 iterate();
             }, e => {
@@ -38,14 +42,8 @@ function getLinks(url) {
     return getPage(url)
         .then(html => {
             const $ = cheerio.load(html);
-            var hrefUrls = [];
-            $('a').each((i, el) => {
-                var href = $(el).attr('href');
-                var hrefUrl = URL.resolve(url, href);
-                hrefUrls.push(hrefUrl);
-            });
-            return hrefUrls;
-        })
+            return links(url, $);
+        });
 }
 
 function getPage(url) {
