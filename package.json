@@ -6,6 +6,10 @@
   "scripts": {
     "test": "mocha"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reykjavikingur/cheerio-crawler.git"
+  },
   "keywords": ["crawler", "scraper", "html", "cheerio", "web"],
   "author": "",
   "license": "MIT",
