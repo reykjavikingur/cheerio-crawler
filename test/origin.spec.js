@@ -2,7 +2,7 @@ const should = require('should');
 
 const origin = require('../lib/origin');
 
-describe.only('origin', () => {
+describe('origin', () => {
 
     it('should work on simple nonsecure domain', () => {
         should(origin('http://domain.com')).eql('http://domain.com')

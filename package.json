@@ -1,14 +1,14 @@
 {
-  "name": "scraper",
+  "name": "cheerio-crawler",
   "version": "1.0.0",
-  "description": "",
+  "description": "Web site crawler using cheerio to scan HTML documents",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "keywords": [],
+  "keywords": ["crawler", "scraper", "html", "cheerio", "web"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "promise": "^8.0.1",

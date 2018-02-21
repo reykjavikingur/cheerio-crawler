@@ -56,6 +56,22 @@ describe('links', () => {
             });
         });
 
+        describe('given body with link lacking href', () => {
+            beforeEach(() => {
+                var html = `
+                <div>
+                <a>anchor</a>
+                </div>
+`;
+                $ = cheerio.load(html);
+            });
+
+            it('should find no links', () => {
+                var urls = links(url, $);
+                should(urls).eql([]);
+            });
+        });
+
         describe('given body with link to root missing trailing slash', () => {
             beforeEach(() => {
                 var html = `

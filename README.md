@@ -1,19 +1,30 @@
-# Scraper
+# cheerio-crawler
 
-## Recursive scraping
+Web site crawler that visits URL's recursively, starting from one initial URL
+and following links in HTML responses, and invokes your callback function for each one.
 
-* take next unvisited url from queue
-* get html from url
-* mark url as visited in queue
-* get all hrefs from html
-* for each href
-    * calculate url
-    * if url is valid and url is not in queue
-        * add it to queue as unvisited
-        * recurse
+## Example
 
-### restrictions
+```
+var crawl = Crawler(function (url, $) {
+    var title = $('title').text();
+    console.log(title, '---', url);
+});
 
-* do not leave the origin server
-* stop after a certain max number of page loads
-* stop after queue reaches certain max number of urls
+// ...
+
+crawl('http://www.resource.com/', function (err) {
+    if (err) {
+        console.error('unable to complete crawl:', err.message);
+    }
+    else {
+        console.log('finished');
+    }
+});
+```
+
+### Functionality
+
+* stays on the origin of the initial URL
+* gets URL's from `a@href`
+* makes one request at a time
