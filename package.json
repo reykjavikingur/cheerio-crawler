@@ -1,6 +1,6 @@
 {
   "name": "cheerio-crawler",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Web site crawler using cheerio to scan HTML documents",
   "main": "index.js",
   "scripts": {
