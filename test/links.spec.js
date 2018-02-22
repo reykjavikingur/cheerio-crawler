@@ -197,6 +197,23 @@ describe('links', () => {
                 ]);
             });
         });
+
+        describe('given body with protocol-relative url', () => {
+            beforeEach(() => {
+                var html = `
+                <div>
+                <a href="//localhost:3000/about"
+                </div>
+`;
+                $ = cheerio.load(html);
+            });
+            it('should find correct url', () => {
+                var urls = links(url, $);
+                should(urls).eql([
+                    'http://localhost:3000/about'
+                ]);
+            });
+        });
     });
 
 });
