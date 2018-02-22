@@ -67,6 +67,15 @@ describe('Queue', () => {
                 queue.next();
                 should(queue.next()).not.be.ok();
             });
+
+            describe('when cleared', () => {
+                beforeEach(() => {
+                    queue.clear();
+                });
+                it('should run out of next urls', () => {
+                    should(queue.next()).not.be.ok();
+                });
+            });
         });
 
         describe('when adding 2 same urls', () => {

@@ -123,6 +123,23 @@ describe('links', () => {
             });
         });
 
+        describe('given body with link containing fragment', () => {
+            beforeEach(() => {
+                var html = `
+                <div>
+                <a href="http://localhost:3000/about#faq"></a>
+                </div>
+`;
+                $ = cheerio.load(html);
+            });
+            it('should remove fragment', () => {
+                var urls = links(url, $);
+                should(urls).eql([
+                    'http://localhost:3000/about'
+                ]);
+            });
+        });
+
     });
 
     describe('given non-root url', () => {

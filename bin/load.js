@@ -1,27 +1,25 @@
 const Crawler = require('../');
 
-const MAX_VISITS = 50;
-
 var args = process.argv.slice(2);
 var url = args[0];
 if (!url) {
-    console.error('no url given');
+    console.error('must provide url');
     process.exit(1);
 }
 
-var numVisits = 0;
 const crawl = Crawler((url, $) => {
-    numVisits++;
     var title = $('title').text();
+    var hrefs = $('a').map((i, el) => $(el).attr('href')).toArray().filter(href => typeof href !== 'undefined');
     console.log(title, '---', url);
-    if (numVisits >= MAX_VISITS) {
-        crawl.cancel();
+    for (let href of hrefs) {
+        console.log('>>  ', href);
     }
+    return false;
 });
 
 crawl(url, (err) => {
     if (err) {
-        console.error('unable to finish crawl:', err.message);
+        console.error('unable to load:', err.message);
     }
     else {
         console.log('FINISHED');

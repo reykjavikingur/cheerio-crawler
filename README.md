@@ -23,8 +23,34 @@ crawl('http://www.resource.com/', function (err) {
 });
 ```
 
-### Functionality
+## Example: Cancel
+
+To cancel a crawl at any time, such as when exceeding a threshold, call the "cancel" method:
+
+```
+var crawl = Crawler(function(url, $) {
+    if (visits++ > MAX_VISITS) {
+        crawl.cancel();
+    }
+});
+```
+
+## Example: Skip Recursion
+
+To skip recursion on a URL, return false from the handler function:
+
+```
+var crawl = Crawler(function(url, $) {
+    if (DO_NOT_CRAWL_LIST.contains(url)) {
+        return false;
+    }
+});
+```
+
+## Functionality
 
 * stays on the origin of the initial URL
 * gets URL's from `a@href`
 * makes one request at a time
+* requests each URL only once (de-duplicates requests)
+* removes URL fragments (hash)
